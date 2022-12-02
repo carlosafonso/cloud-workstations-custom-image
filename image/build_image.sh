@@ -12,8 +12,21 @@ if [ -z $IMAGE_NAME ]; then
     exit 1
 fi
 
-SUFFIX=$(date +%Y%m%d%H%M%S)
-docker build . -t "$REGISTRY_URL/$IMAGE_NAME:$SUFFIX"
-docker push "$REGISTRY_URL/$IMAGE_NAME:$SUFFIX"
+if [ -z $WORKSPACE_DIR ]; then
+    WORKSPACE_DIR="/tmp"
+else
+    WORKSPACE_DIR="/workspace"
+fi
 
-echo "Image built successfully: $REGISTRY_URL/$IMAGE_NAME:$SUFFIX"
+OUTFILE="$WORKSPACE_DIR/data.txt"
+
+SUFFIX=$(date +%Y%m%d%H%M%S)
+IMAGE_URL="$REGISTRY_URL/$IMAGE_NAME:$SUFFIX"
+
+docker build . -t "$IMAGE_URL"
+docker push "$IMAGE_URL"
+
+echo "Image built successfully: $IMAGE_URL"
+
+echo "$IMAGE_URL" > "$OUTFILE"
+echo "Outfile $OUTFILE written"
