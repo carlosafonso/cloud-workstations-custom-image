@@ -29,3 +29,8 @@ variable "branch_filter_regex" {
   description = "The regular expression to use when filtering repo branches. The build will run only if the branch matches this filter."
   default     = ".*"
 }
+
+variable "workstations_config_name" {
+  type        = string
+  description = "The full name of the Cloud Workstations configuration (e.g., projects/.../locations/.../workstationClusters/.../workstationConfigs/...)"
+}

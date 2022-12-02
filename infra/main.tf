@@ -82,6 +82,7 @@ resource "google_cloudbuild_trigger" "main" {
   substitutions = {
     _ARTIFACT_REGISTRY_BASE_URL = "${var.gcp_region}-docker.pkg.dev/${var.gcp_project_id}/${google_artifact_registry_repository.main.repository_id}"
     _IMAGE_NAME                 = local.name
+    _WORKSTATIONS_CONFIG_NAME   = var.workstations_config_name
     _REGION                     = var.gcp_region
   }
 
