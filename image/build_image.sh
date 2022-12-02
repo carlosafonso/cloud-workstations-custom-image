@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-set -euo pipefail
+set -eo pipefail
 
 if [ -z $REGISTRY_URL ]; then
     echo "Can't build image: \$REGISTRY_URL not defined"
