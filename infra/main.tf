@@ -62,6 +62,8 @@ module "cloudbuild_svc_acct_iam_member_roles" {
     "roles/artifactregistry.writer",
     # Allows writing logs to Cloud Logging.
     "roles/logging.logWriter",
+    # Allows updating Cloud Workstations resources.
+    "roles/workstations.admin",
   ]
 }
 
