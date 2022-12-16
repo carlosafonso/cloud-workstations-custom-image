@@ -30,6 +30,12 @@ variable "branch_filter_regex" {
   default     = ".*"
 }
 
+variable "scheduled_build_branch_name" {
+  type        = string
+  description = "The name of the Git branch to pull when running scheduled builds."
+  default     = "main"
+}
+
 variable "workstations_config_name" {
   type        = string
   description = "The full name of the Cloud Workstations configuration (e.g., projects/.../locations/.../workstationClusters/.../workstationConfigs/...)"

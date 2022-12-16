@@ -67,6 +67,22 @@ module "cloudbuild_svc_acct_iam_member_roles" {
   ]
 }
 
+resource "google_service_account" "cloudscheduler" {
+  account_id   = "${local.name}-cs"
+  display_name = "${local.name} pipeline - Service Account for Cloud Scheduler job"
+}
+
+module "cloudscheduler_svc_acct_iam_member_roles" {
+  source                  = "terraform-google-modules/iam/google//modules/member_iam"
+  service_account_address = google_service_account.cloudscheduler.email
+  project_id              = var.gcp_project_id
+  project_roles = [
+    # Allows running Cloud Build builds.
+    #"roles/cloudbuild.builds.editor",
+    "roles/editor",
+  ]
+}
+
 # The trigger of Cloud Build builds. Assumes that source repo is hosted on
 # GitHub.
 resource "google_cloudbuild_trigger" "main" {
@@ -89,4 +105,26 @@ resource "google_cloudbuild_trigger" "main" {
   }
 
   filename = "image/cloudbuild.yaml"
+}
+
+# The Cloud Scheduler job that will trigger the build periodically.
+resource "google_cloud_scheduler_job" "main" {
+  name             = "${local.name}-rebuild-job"
+  description      = "Cloud Workstations custom image - Weekly automatic rebuild trigger"
+  schedule         = "0 0 * * 2"
+  time_zone        = "UTC"
+  attempt_deadline = "30s"
+
+  retry_config {
+    retry_count = 0
+  }
+
+  http_target {
+    http_method = "POST"
+    uri         = "https://cloudbuild.googleapis.com/v1/${google_cloudbuild_trigger.main.id}:run"
+    body        = base64encode("{\"branchName\": \"${var.scheduled_build_branch_name}\"}")
+    oauth_token {
+      service_account_email = google_service_account.cloudscheduler.email
+    }
+  }
 }
