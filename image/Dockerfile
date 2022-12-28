@@ -39,4 +39,9 @@ RUN curl -sSLo /usr/share/keyrings/deb.sury.org-php.gpg https://packages.sury.or
     && mv composer.phar /usr/bin/composer \
     && php -r "unlink('composer-setup.php');"
 
+# VS Code Extensions
+RUN wget https://open-vsx.org/api/hashicorp/terraform/linux-x64/2.25.2/file/hashicorp.terraform-2.25.2@linux-x64.vsix \
+    && unzip hashicorp.terraform-2.25.2@linux-x64.vsix "extension/*" \
+    && mv extension /opt/code-oss/extensions/terraform
+
 RUN apt-get clean
