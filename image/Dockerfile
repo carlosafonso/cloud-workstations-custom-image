@@ -44,4 +44,8 @@ RUN wget https://open-vsx.org/api/hashicorp/terraform/linux-x64/2.25.2/file/hash
     && unzip hashicorp.terraform-2.25.2@linux-x64.vsix "extension/*" \
     && mv extension /opt/code-oss/extensions/terraform
 
+RUN wget https://open-vsx.org/api/bmewburn/vscode-intelephense-client/1.8.2/file/bmewburn.vscode-intelephense-client-1.8.2.vsix \
+    && unzip bmewburn.vscode-intelephense-client-1.8.2.vsix "extension/*" \
+    && mv extension /opt/code-oss/extensions/vscode-intelephense-client
+
 RUN apt-get clean
