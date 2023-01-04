@@ -30,7 +30,9 @@ RUN curl -sSLo /usr/share/keyrings/deb.sury.org-php.gpg https://packages.sury.or
     && sh -c 'echo "deb [signed-by=/usr/share/keyrings/deb.sury.org-php.gpg] https://packages.sury.org/php/ $(lsb_release -sc) main" > /etc/apt/sources.list.d/sury-php.list' \
     && apt-get -y update \
     && apt-get install -y \
+        php-pear \
         php8.2 \
+        php8.2-dev \
         php8.2-mbstring \
         php8.2-xml \
     && php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');" \
