@@ -51,4 +51,6 @@ RUN wget https://open-vsx.org/api/bmewburn/vscode-intelephense-client/1.8.2/file
     && unzip bmewburn.vscode-intelephense-client-1.8.2.vsix "extension/*" \
     && mv extension /opt/code-oss/extensions/vscode-intelephense-client
 
+COPY 300_copy_user_settings.sh /etc/workstation-startup.d/
+
 RUN apt-get clean
