@@ -9,6 +9,7 @@ RUN apt-get -y update \
         apt-transport-https \
         build-essential \
         ca-certificates \
+        cmake \
         curl \
         gnupg \
         lsb-release \
