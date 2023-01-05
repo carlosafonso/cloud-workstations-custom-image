@@ -13,7 +13,8 @@ cat << EOF > $SETTINGS_PATH/settings.json
     "window.menuBarVisibility": "classic",
     "files.trimFinalNewlines": true,
     "files.insertFinalNewline": true,
-    "files.trimTrailingWhitespace": true
+    "files.trimTrailingWhitespace": true,
+    "files.autoSave": "off"
 }
 EOF
 
