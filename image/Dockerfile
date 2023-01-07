@@ -15,6 +15,10 @@ RUN apt-get -y update \
         lsb-release \
         software-properties-common
 
+# Docker Compose
+RUN apt-get -y install docker-compose-plugin
+
+# Terraform
 RUN wget -O- https://apt.releases.hashicorp.com/gpg | \
         gpg --dearmor | \
         sudo tee /usr/share/keyrings/hashicorp-archive-keyring.gpg \
@@ -27,6 +31,7 @@ RUN wget -O- https://apt.releases.hashicorp.com/gpg | \
     && apt-get -y update \
     && apt-get -y install terraform
 
+# PHP 8.2 additional extensions and libraries
 RUN curl -sSLo /usr/share/keyrings/deb.sury.org-php.gpg https://packages.sury.org/php/apt.gpg \
     && sh -c 'echo "deb [signed-by=/usr/share/keyrings/deb.sury.org-php.gpg] https://packages.sury.org/php/ $(lsb_release -sc) main" > /etc/apt/sources.list.d/sury-php.list' \
     && apt-get -y update \
@@ -51,6 +56,7 @@ RUN wget https://open-vsx.org/api/bmewburn/vscode-intelephense-client/1.8.2/file
     && unzip bmewburn.vscode-intelephense-client-1.8.2.vsix "extension/*" \
     && mv extension /opt/code-oss/extensions/vscode-intelephense-client
 
+# User scripts
 COPY 300_copy_user_settings.sh /etc/workstation-startup.d/
 
 RUN apt-get clean
