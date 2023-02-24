@@ -56,6 +56,10 @@ RUN wget https://open-vsx.org/api/bmewburn/vscode-intelephense-client/1.8.2/file
     && unzip bmewburn.vscode-intelephense-client-1.8.2.vsix "extension/*" \
     && mv extension /opt/code-oss/extensions/vscode-intelephense-client
 
+RUN wget https://open-vsx.org/api/ms-python/python/2023.2.0/file/ms-python.python-2023.2.0.vsix \
+    && unzip ms-python.python-2023.2.0.vsix "extension/*" \
+    && mv extension /opt/code-oss/extensions/python
+
 # User scripts
 COPY 300_copy_user_settings.sh /etc/workstation-startup.d/
 
