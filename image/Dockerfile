@@ -12,6 +12,7 @@ RUN apt-get -y update \
         cmake \
         curl \
         gnupg \
+        jq \
         lsb-release \
         software-properties-common
 
@@ -52,6 +53,13 @@ RUN curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2
     && unzip awscliv2.zip \
     && ./aws/install \
     && rm -rf aws awscliv2.zip
+
+# AWS SAM
+RUN curl -LO "https://github.com/aws/aws-sam-cli/releases/latest/download/aws-sam-cli-linux-x86_64.zip" \
+    && unzip aws-sam-cli-linux-x86_64.zip -d sam-installation \
+    && ./sam-installation/install \
+    && sam --version \
+    && rm -rf aws-sam-cli-linux-x86_64.zip sam-installation
 
 # VS Code Extensions
 RUN wget https://open-vsx.org/api/hashicorp/terraform/linux-x64/2.25.2/file/hashicorp.terraform-2.25.2@linux-x64.vsix \
