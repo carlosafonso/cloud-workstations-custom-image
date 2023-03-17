@@ -74,6 +74,10 @@ RUN wget https://open-vsx.org/api/ms-python/python/2023.2.0/file/ms-python.pytho
     && unzip ms-python.python-2023.2.0.vsix "extension/*" \
     && mv extension /opt/code-oss/extensions/python
 
+RUN wget https://open-vsx.org/api/Vue/volar/1.2.0/file/Vue.volar-1.2.0.vsix \
+    && unzip Vue.volar-1.2.0.vsix "extension/*" \
+    && mv extension /opt/code-oss/extensions/Vue.volar-1.2.0
+
 # User scripts
 COPY 300_copy_user_settings.sh /etc/workstation-startup.d/
 
