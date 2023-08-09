@@ -19,6 +19,11 @@ RUN apt-get -y update \
 # Docker Compose
 RUN apt-get -y install docker-compose-plugin
 
+# Kubectx
+RUN wget -O- https://github.com/ahmetb/kubectx/releases/download/v0.9.5/kubectx_v0.9.5_linux_x86_64.tar.gz | tar -xvz kubectx \
+    && chmod +x kubectx \
+    && mv kubectx /usr/bin/kubectx
+
 # Terraform
 RUN wget -O- https://apt.releases.hashicorp.com/gpg | \
         gpg --dearmor | \
