@@ -19,10 +19,15 @@ RUN apt-get -y update \
 # Docker Compose
 RUN apt-get -y install docker-compose-plugin
 
-# Kubectx
+# K8s tooling: Kubectx
 RUN wget -O- https://github.com/ahmetb/kubectx/releases/download/v0.9.5/kubectx_v0.9.5_linux_x86_64.tar.gz | tar -xvz kubectx \
     && chmod +x kubectx \
-    && mv kubectx /usr/bin/kubectx
+    && mv kubectx /usr/bin
+
+# K8s tooling: K9s
+RUN wget -O- https://github.com/derailed/k9s/releases/download/v0.27.4/k9s_Linux_amd64.tar.gz | tar -xvz k9s \
+    && chmod +x k9s \
+    && mv k9s /usr/bin
 
 # Terraform
 RUN wget -O- https://apt.releases.hashicorp.com/gpg | \
