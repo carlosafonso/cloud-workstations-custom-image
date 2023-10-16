@@ -16,6 +16,9 @@ RUN apt-get -y update \
         lsb-release \
         software-properties-common
 
+# gcloud CLI components
+RUN apt-get -y install google-cloud-sdk-nomos
+
 # Docker Compose
 RUN apt-get -y install docker-compose-plugin
 
