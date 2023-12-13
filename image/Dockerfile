@@ -59,6 +59,10 @@ RUN add-apt-repository -y ppa:ondrej/php \
     && mv composer.phar /usr/bin/composer \
     && php -r "unlink('composer-setup.php');"
 
+# Golang
+RUN go install -v golang.org/x/tools/gopls@latest \
+    && go install -v golang.org/x/tools/cmd/goimports@latest
+
 # AWS CLI
 RUN curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip" \
     && unzip awscliv2.zip \
@@ -92,6 +96,10 @@ RUN wget https://open-vsx.org/api/Vue/volar/1.2.0/file/Vue.volar-1.2.0.vsix \
 RUN wget https://open-vsx.org/api/ms-python/pylint/2023.6.0/file/ms-python.pylint-2023.6.0.vsix \
     && unzip ms-python.pylint-2023.6.0.vsix "extension/*" \
     && mv extension /opt/code-oss/extensions/ms-python.pylint-2023.6.0
+
+RUN wget https://open-vsx.org/api/golang/Go/0.40.0/file/golang.Go-0.40.0.vsix \
+    && unzip golang.Go-0.40.0.vsix "extension/*" \
+    && mv extension /opt/code-oss/extensions/golang.Go-0.40.0
 
 # User scripts
 COPY 300_copy_user_settings.sh /etc/workstation-startup.d/
