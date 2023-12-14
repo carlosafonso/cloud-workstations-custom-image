@@ -9,7 +9,7 @@ mkdir -p $SETTINGS_PATH
 
 cat << EOF > $SETTINGS_PATH/settings.json
 {
-    "workbench.colorTheme": "Default Dark+",
+    "workbench.colorTheme": "Default Dark Modern",
     "window.menuBarVisibility": "classic",
     "files.trimFinalNewlines": true,
     "files.insertFinalNewline": true,
