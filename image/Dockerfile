@@ -73,7 +73,8 @@ RUN curl -LO "https://github.com/protocolbuffers/protobuf/releases/download/v${P
 
 # grpcurl
 RUN curl -LO "https://github.com/fullstorydev/grpcurl/releases/download/v${GRPCURL_VERSION}/grpcurl_${GRPCURL_VERSION}_linux_x86_64.tar.gz" \
-    && tar xfvz "grpcurl_${GRPCURL_VERSION}_linux_x86_64.tar.gz" grpcurl -C /usr/local/bin/ \
+    && tar xfvz "grpcurl_${GRPCURL_VERSION}_linux_x86_64.tar.gz" grpcurl \
+    && mv grpcurl /usr/bin \
     && rm "grpcurl_${GRPCURL_VERSION}_linux_x86_64.tar.gz"
 
 # Go plugins for protoc
