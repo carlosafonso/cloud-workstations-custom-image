@@ -3,6 +3,8 @@ FROM us-central1-docker.pkg.dev/cloud-workstations-images/predefined/code-oss:la
 # Use ARG instead of ENV, as using ENV pollutes images based on this one
 # whereas ARG only applies during build time.
 ARG DEBIAN_FRONTEND=noninteractive
+ARG PROTOC_VERSION="25.1"
+ARG GRPCURL_VERSION="1.8.9"
 
 RUN apt-get -y update \
     && apt-get install -y \
@@ -62,6 +64,21 @@ RUN add-apt-repository -y ppa:ondrej/php \
 # Golang
 RUN go install -v golang.org/x/tools/gopls@latest \
     && go install -v golang.org/x/tools/cmd/goimports@latest
+
+# protoc
+RUN curl -LO "https://github.com/protocolbuffers/protobuf/releases/download/v${PROTOC_VERSION}/protoc-${PROTOC_VERSION}-linux-x86_64.zip" \
+    && unzip protoc-$PROTOC_VERSION-linux-x86_64.zip -d /usr/local/protoc \
+    && rm protoc-$PROTOC_VERSION-linux-x86_64.zip \
+    && ln -s /usr/local/protoc/bin/protoc /usr/bin/protoc
+
+# grpcurl
+RUN curl -LO "https://github.com/fullstorydev/grpcurl/releases/download/v${GRPCURL_VERSION}/grpcurl_${GRPCURL_VERSION}_linux_x86_64.tar.gz" \
+    && tar xfvz "grpcurl_${GRPCURL_VERSION}_linux_x86_64.tar.gz" grpcurl -C /usr/local/bin/ \
+    && rm "grpcurl_${GRPCURL_VERSION}_linux_x86_64.tar.gz"
+
+# Go plugins for protoc
+RUN go install google.golang.org/protobuf/cmd/protoc-gen-go@v1.28 \
+    && go install google.golang.org/grpc/cmd/protoc-gen-go-grpc@v1.2
 
 # AWS CLI
 RUN curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip" \
