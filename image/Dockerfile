@@ -1,5 +1,7 @@
 FROM us-central1-docker.pkg.dev/cloud-workstations-images/predefined/code-oss:latest
 
+LABEL org.opencontainers.image.authors="fonsi@google.com"
+
 # Use ARG instead of ENV, as using ENV pollutes images based on this one
 # whereas ARG only applies during build time.
 ARG DEBIAN_FRONTEND=noninteractive
@@ -18,8 +20,11 @@ RUN apt-get -y update \
         lsb-release \
         software-properties-common
 
-# gcloud CLI components
-RUN apt-get -y install google-cloud-sdk-nomos
+# Update and install gcloud CLI and components
+RUN apt-get -y install \
+    google-cloud-sdk \
+    google-cloud-sdk-minikube \
+    google-cloud-sdk-nomos
 
 # Docker Compose
 RUN apt-get -y install docker-compose-plugin
