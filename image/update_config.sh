@@ -15,14 +15,10 @@ fi
 
 IMAGE_URL=$(cat "$WORKSPACE_DIR/data.txt")
 
-echo "Updating Cloud Workstations config with image URL $IMAGE_URL"
+echo "Updating Cloud Workstations config '$WORKSTATIONS_CONFIG_NAME' with image URL '$IMAGE_URL'"
 
-# Directly using the Workstations API as the CLI does not yet support this
-# operation.
-curl -X PATCH \
-    "https://workstations.googleapis.com/v1beta/$WORKSTATIONS_CONFIG_NAME?updateMask=container.image" \
-    -H "Authorization: Bearer $(gcloud auth print-access-token)" \
-    -H "Content-Type: application/json" \
-    -d "{\"container\": {\"image\": \"$IMAGE_URL\"}}"
+gcloud workstations configs update \
+    --container-custom-image="$IMAGE_URL" \
+    "$WORKSTATIONS_CONFIG_NAME"
 
 echo "Cloud Workstations config updated"
