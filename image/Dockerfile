@@ -57,6 +57,7 @@ RUN add-apt-repository -y ppa:ondrej/php \
     && apt-get install -y \
         php-pear \
         php8.2 \
+        php8.2-curl \
         php8.2-dev \
         php8.2-mbstring \
         php8.2-xml \
