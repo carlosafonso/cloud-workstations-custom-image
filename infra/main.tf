@@ -63,6 +63,8 @@ module "cloudbuild_svc_acct_iam_member_roles" {
     "roles/logging.logWriter",
     # Allows updating Cloud Workstations resources.
     "roles/workstations.admin",
+    # This is needed specifically to update Cloud Workstations configurations.
+    "roles/iam.serviceAccountUser",
   ]
 }
 
