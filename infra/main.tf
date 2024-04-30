@@ -78,9 +78,8 @@ module "cloudscheduler_svc_acct_iam_member_roles" {
   service_account_address = google_service_account.cloudscheduler.email
   project_id              = var.gcp_project_id
   project_roles = [
-    # Allows running Cloud Build builds.
-    #"roles/cloudbuild.builds.editor",
-    "roles/editor",
+    # Allows running Cloud Workflows.
+    "roles/workflows.invoker",
   ]
 }
 
@@ -108,6 +107,23 @@ resource "google_cloudbuild_trigger" "main" {
   filename = "image/cloudbuild.yaml"
 }
 
+data "local_file" "workflows_definition" {
+  filename = "${path.module}/../workflow.yaml"
+}
+
+resource "google_workflows_workflow" "main" {
+  name            = local.name
+  description     = "Builds a custom Cloud Workstations image and updates the Workstations config."
+  call_log_level  = "LOG_ALL_CALLS"
+  source_contents = data.local_file.workflows_definition.content
+
+  user_env_vars = {
+    CLOUD_BUILD_TRIGGER_PROJECT_ID  = var.gcp_project_id
+    CLOUD_BUILD_TRIGGER_ID          = google_cloudbuild_trigger.main.trigger_id
+    CLOUD_BUILD_TRIGGER_BRANCH_NAME = var.scheduled_build_branch_name
+  }
+}
+
 # The Cloud Scheduler job that will trigger the build periodically.
 resource "google_cloud_scheduler_job" "main" {
   name             = "${local.name}-rebuild-job"
@@ -122,8 +138,7 @@ resource "google_cloud_scheduler_job" "main" {
 
   http_target {
     http_method = "POST"
-    uri         = "https://cloudbuild.googleapis.com/v1/${google_cloudbuild_trigger.main.id}:run"
-    body        = base64encode("{\"branchName\": \"${var.scheduled_build_branch_name}\"}")
+    uri         = "https://workflowexecutions.googleapis.com/v1/${google_workflows_workflow.main.id}/executions"
     oauth_token {
       service_account_email = google_service_account.cloudscheduler.email
     }
