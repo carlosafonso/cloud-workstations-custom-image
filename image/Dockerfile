@@ -20,6 +20,7 @@ RUN apt-get -y update \
         gnupg \
         jq \
         lsb-release \
+        python3.10-venv \
         software-properties-common
 
 # Update and install gcloud CLI and components
