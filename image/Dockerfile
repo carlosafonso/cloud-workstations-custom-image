@@ -128,6 +128,10 @@ RUN wget https://open-vsx.org/api/golang/Go/0.40.0/file/golang.Go-0.40.0.vsix \
     && unzip golang.Go-0.40.0.vsix "extension/*" \
     && mv extension /opt/code-oss/extensions/golang.Go-0.40.0
 
+RUN wget https://open-vsx.org/api/dbaeumer/vscode-eslint/3.0.10/file/dbaeumer.vscode-eslint-3.0.10.vsix \
+    && unzip dbaeumer.vscode-eslint-3.0.10.vsix "extension/*" \
+    && mv extension /opt/code-oss/extensions/dbaeumer.vscode-eslint-3.0.10
+
 # User scripts
 COPY 300_copy_user_settings.sh /etc/workstation-startup.d/
 

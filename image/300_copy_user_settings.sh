@@ -14,7 +14,11 @@ cat << EOF > $SETTINGS_PATH/settings.json
     "files.trimFinalNewlines": true,
     "files.insertFinalNewline": true,
     "files.trimTrailingWhitespace": true,
-    "files.autoSave": "off"
+    "files.autoSave": "off",
+    "editor.codeActionsOnSave": {
+        "source.fixAll.eslint": true
+    },
+    "eslint.validate": ["typescript", "typescriptreact"]
 }
 EOF
 
