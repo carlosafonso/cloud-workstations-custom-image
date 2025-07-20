@@ -132,6 +132,10 @@ RUN wget https://open-vsx.org/api/dbaeumer/vscode-eslint/3.0.10/file/dbaeumer.vs
     && unzip dbaeumer.vscode-eslint-3.0.10.vsix "extension/*" \
     && mv extension /opt/code-oss/extensions/dbaeumer.vscode-eslint-3.0.10
 
+# Other tools
+RUN curl -L https://gist.githubusercontent.com/carlosafonso/dece3116cf50eb7dde393bc9d4174c6b/raw/12c877ce0d72f06a3c24c56040b70f8c3121159a/aws-mfa-login.sh > /usr/bin/aws-mfa-login.sh \
+    && chmod +x /usr/bin/aws-mfa-login.sh
+
 # User scripts
 COPY 300_copy_user_settings.sh /etc/workstation-startup.d/
 
